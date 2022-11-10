@@ -1,9 +1,9 @@
 import React from 'react'
 import Button from '@mui/material/Button';
 
-const Buttons = () => {
+const Buttons = ({ title, handleAction }) => {
   return (
-    <Button variant="contained">Login Button</Button>
+    <Button variant="contained" onClick={handleAction}>{title}</Button>
   )
 }
 

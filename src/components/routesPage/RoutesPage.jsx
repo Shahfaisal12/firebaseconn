@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes, useNavigate  } from 'react-router-dom'
-import Base from '../Layout/Base'
-import Home from '../../pages/Home'
+// import Base from '../Layout/Base'
+import Home from '../elements/Home'
 import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
-import { app } from "./firebase";
+import { app } from "../../firebase";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -65,10 +65,11 @@ const RoutesPage = () => {
 
     return (
         <>
-            <BrowserRouter>
-                <Base>
+            <ToastContainer />
+            {/* <BrowserRouter> */}
+                {/* <Base> */}
                     <Routes >
-                        <Route index path='/' element={<Home />} />
+                        <Route path='/' element={<Home />} />
                         <Route
                             path="/login"
                             element={
@@ -76,7 +77,7 @@ const RoutesPage = () => {
                                     setEmail={setEmail}
                                     setPassword={setPassword}
                                     handleAction={() => handleAction(1)}
-                                    title="login" />
+                                    title="Login" />
                             }
                         />
                         <Route
@@ -86,14 +87,14 @@ const RoutesPage = () => {
                                     setEmail={setEmail}
                                     setPassword={setPassword}
                                     handleAction={() => handleAction(2)}
-                                    title="register"
+                                    title="Register"
                                 />
                             }
                         />
                         <Route path='/*' element={<PageNotFound />} />
                     </Routes>
-                </Base>
-            </BrowserRouter>
+                {/* </Base> */}
+            {/* </BrowserRouter> */}
         </>
     )
 }

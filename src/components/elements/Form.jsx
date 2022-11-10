@@ -6,12 +6,9 @@ import Card from '@mui/material/Card';
 import Button from './Buttons'
 import { Link } from 'react-router-dom';
 
-const Form = () => {
-
-
+const Form = ({ title, setEmail, setPassword, handleAction }) => {
 
   return (
-
 
     <div className="form-section py-5">
       <Container fixed>
@@ -26,11 +23,11 @@ const Form = () => {
                 autoComplete="off"
                 className='text-center'
               >
-                <h2 className="fw-bold mb-2 text-uppercase">SignUP</h2>
+                <h2 className="fw-bold mb-2 text-uppercase">{title} Form</h2>
                 <p className="mb-5">Please enter your detail for signup</p>
-                <TextField id="email" fullWidth label="Email" variant="outlined" name='email' />
-                <TextField id="password" className='mb-5' fullWidth label="Password" variant="outlined" name='password' value='' />
-                <Button />
+                <TextField id="email" fullWidth label="Email" type="email" variant="outlined" onChange={(e) => setEmail(e.target.value)} />
+                <TextField id="password" className='mb-5' fullWidth label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} />
+                <Button title={title} handleAction={handleAction} />
                 <div>
                   <p className="mb-0">Already an account? <Link to="/signin" className="text-muted fw-bold">Sign In</Link></p>
                 </div>
@@ -38,6 +35,7 @@ const Form = () => {
             </Card>
       </Container>
     </div>
+    
   )
 }
 
