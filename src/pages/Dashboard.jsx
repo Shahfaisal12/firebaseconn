@@ -3,13 +3,13 @@ import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Home() {
+function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
     let authToken = sessionStorage.getItem("auth");
     if (authToken) {
-      navigate("/home");
+      navigate("/dashboard");
     }
     if (!authToken) {
       navigate("/login");
@@ -23,10 +23,10 @@ function Home() {
 
   return (
 
-    <>
-    <h2>Home</h2>
-    <Button onClick={logout}>Log out</Button>
-    </>
+   <div className="text-center">
+   <h1 className="fw-bold">Dashboard</h1>
+    <Button className="fw-bold" onClick={logout}>Log out</Button>
+   </div>
   );
 }
-export default Home;
+export default Dashboard;

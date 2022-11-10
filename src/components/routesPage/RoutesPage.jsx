@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 // import Base from '../Layout/Base'
-import Home from '../elements/Home'
 import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
-import { app } from "../../firebase";
+import Home from '../../pages/Home'
+import { app } from "../../Firebase";
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -13,38 +13,35 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
+import Dashboard from '../../pages/Dashboard'
 
 
 const RoutesPage = () => {
-
-    const [name, setName] = useState("");
-    // const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const [repassword, setRepassword] = useState("");
 
     const navigate = useNavigate();
 
     useEffect(() => {
         let authToken = sessionStorage.getItem("auth");
         if (authToken) {
-            navigate("/home");
+            navigate("/dashboard");
         }
     }, []);
 
     const handleAction = (id) => {
         const authentication = getAuth();
         if (id === 2) {
-            createUserWithEmailAndPassword(authentication, name, email, password)
+            createUserWithEmailAndPassword(authentication, email, password)
                 .then((res) => {
-                    navigate("/home");
+                    navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
                 })
                 .catch((e) => {
-                    if (e.code == "auth/wrong-password") {
+                    if (e.code === "auth/wrong-password") {
                         toast.error("please check the password");
                     }
-                    if (e.code == "auth/user-not-found") {
+                    if (e.code === "auth/user-not-found") {
                         toast.error("please check the email");
                     }
                 });
@@ -52,14 +49,14 @@ const RoutesPage = () => {
         if (id === 1) {
             signInWithEmailAndPassword(authentication, email, password)
                 .then((res) => {
-                    navigate("/home");
+                    navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
                 })
                 .catch((e) => {
-                    if (e.code == "auth/wrong-password") {
+                    if (e.code === "auth/wrong-password") {
                         toast.error("please check the password");
                     }
-                    if (e.code == "auth/user-not-found") {
+                    if (e.code === "auth/user-not-found") {
                         toast.error("please check the email");
                     }
                 });
@@ -73,7 +70,8 @@ const RoutesPage = () => {
             {/* <BrowserRouter> */}
             {/* <Base> */}
             <Routes >
-                <Route path='/home' element={<Home />} />
+                <Route index path='/' element={<Home /> } />
+                <Route path='/dashboard' element={<Dashboard />} />
                 <Route
                     path="/login"
                     element={
@@ -88,7 +86,6 @@ const RoutesPage = () => {
                     path="/register"
                     element={
                         <Form
-                            setName={setName}
                             setEmail={setEmail}
                             setPassword={setPassword}
                             handleAction={() => handleAction(2)}
