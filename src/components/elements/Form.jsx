@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import Button from './Buttons'
 import { Link } from 'react-router-dom';
 
-const Form = ({ title, setEmail, setPassword, handleAction }) => {
+const Form = ({ title, setName, setEmail, setPassword, handleAction }) => {
 
   return (
 
@@ -25,11 +25,12 @@ const Form = ({ title, setEmail, setPassword, handleAction }) => {
               >
                 <h2 className="fw-bold mb-2 text-uppercase">{title} Form</h2>
                 <p className="mb-5">Please enter your detail for signup</p>
-                <TextField id="email" fullWidth label="Email" type="email" variant="outlined" onChange={(e) => setEmail(e.target.value)} />
-                <TextField id="password" className='mb-5' fullWidth label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} />
+                <TextField id="name" fullWidth label="Name" type="text" variant="outlined" onChange={(e) => setName(e.target.value)} /> <br />
+                <TextField id="email" fullWidth label="Email" type="email" variant="outlined" onChange={(e) => setEmail(e.target.value)} /> <br />
+                <TextField id="password" className='mb-5' fullWidth label="Password" type='password' variant="outlined" onChange={(e) => setPassword(e.target.value)} /> <br />
                 <Button title={title} handleAction={handleAction} />
                 <div>
-                  <p className="mb-0">Already an account? <Link to="/signin" className="text-muted fw-bold">Sign In</Link></p>
+                  <p className="mb-0">Already an account? <Link to="/register" className="text-muted fw-bold">Sign In</Link></p>
                 </div>
               </Box>
             </Card>

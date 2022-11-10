@@ -22,9 +22,10 @@ function Home() {
   };
 
   return (
+
     <>
-      <h2>Home</h2>
-      <Button onClick={logout}>Log out</Button>
+    <h2>Home</h2>
+    <Button onClick={logout}>Log out</Button>
     </>
   );
 }

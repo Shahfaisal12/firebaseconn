@@ -1,14 +1,14 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes, useNavigate  } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 // import Base from '../Layout/Base'
 import Home from '../elements/Home'
 import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
 import { app } from "../../firebase";
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,8 +17,12 @@ import { useEffect, useState } from "react";
 
 const RoutesPage = () => {
 
+    const [name, setName] = useState("");
+    // const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    // const [repassword, setRepassword] = useState("");
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,7 +35,7 @@ const RoutesPage = () => {
     const handleAction = (id) => {
         const authentication = getAuth();
         if (id === 2) {
-            createUserWithEmailAndPassword(authentication, email, password)
+            createUserWithEmailAndPassword(authentication, name, email, password)
                 .then((res) => {
                     navigate("/home");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
@@ -67,33 +71,34 @@ const RoutesPage = () => {
         <>
             <ToastContainer />
             {/* <BrowserRouter> */}
-                {/* <Base> */}
-                    <Routes >
-                        <Route path='/' element={<Home />} />
-                        <Route
-                            path="/login"
-                            element={
-                                <Form
-                                    setEmail={setEmail}
-                                    setPassword={setPassword}
-                                    handleAction={() => handleAction(1)}
-                                    title="Login" />
-                            }
+            {/* <Base> */}
+            <Routes >
+                <Route path='/home' element={<Home />} />
+                <Route
+                    path="/login"
+                    element={
+                        <Form
+                            setEmail={setEmail}
+                            setPassword={setPassword}
+                            handleAction={() => handleAction(1)}
+                            title="Login" />
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <Form
+                            setName={setName}
+                            setEmail={setEmail}
+                            setPassword={setPassword}
+                            handleAction={() => handleAction(2)}
+                            title="Register"
                         />
-                        <Route
-                            path="/register"
-                            element={
-                                <Form
-                                    setEmail={setEmail}
-                                    setPassword={setPassword}
-                                    handleAction={() => handleAction(2)}
-                                    title="Register"
-                                />
-                            }
-                        />
-                        <Route path='/*' element={<PageNotFound />} />
-                    </Routes>
-                {/* </Base> */}
+                    }
+                />
+                <Route path='/*' element={<PageNotFound />} />
+            </Routes>
+            {/* </Base> */}
             {/* </BrowserRouter> */}
         </>
     )
