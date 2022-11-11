@@ -4,7 +4,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
 import Home from '../../pages/Home'
-import {app, db } from "./firebase";
+// eslint-disable-next-line
+import {app, db } from "../../Firebase";
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -28,7 +29,7 @@ const RoutesPage = () => {
         if (authToken) {
             navigate("/dashboard");
         }
-    }, []);
+    }, [navigate]);
 
     const handleAction = (id) => {
         const authentication = getAuth();
