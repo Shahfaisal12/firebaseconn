@@ -5,7 +5,7 @@ import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
 import Home from '../../pages/Home'
 // eslint-disable-next-line
-import {app, db } from "../../Firebase";
+import { app, db } from "../../Firebase";
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -38,10 +38,10 @@ const RoutesPage = () => {
                 .then((res) => {
                     navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
-                    addDoc(collection(db, "use"), {
-                        email:email,
-                        password:password
-                      });
+                    addDoc(collection(db, "users"), {
+                        email: email,
+                        password: password
+                    });
                 })
                 .catch((e) => {
                     if (e.code === "auth/wrong-password") {
@@ -76,7 +76,7 @@ const RoutesPage = () => {
             {/* <BrowserRouter> */}
             {/* <Base> */}
             <Routes >
-                <Route index path='/' element={<Home /> } />
+                <Route index path='/' element={<Home />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route
                     path="/login"
