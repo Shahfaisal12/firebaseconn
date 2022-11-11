@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
 import Home from '../../pages/Home'
-import { app } from "../../Firebase";
+import { app, db } from "../../Firebase";
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import Dashboard from '../../pages/Dashboard'
+import { collection, addDoc } from "firebase/firestore";
 
 
 const RoutesPage = () => {
@@ -36,6 +37,10 @@ const RoutesPage = () => {
                 .then((res) => {
                     navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
+                    addDoc(collection(db, "users"), {
+                        email:email,
+                        password:password
+                      });
                 })
                 .catch((e) => {
                     if (e.code === "auth/wrong-password") {
