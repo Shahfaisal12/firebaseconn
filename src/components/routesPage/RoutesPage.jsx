@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import PageNotFound from '../../pages/PageNotFound'
 import Form from '../elements/Form'
 import Home from '../../pages/Home'
-import { app, db } from "../../Firebase";
+import app, {  db } from "../../Firebase";
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -37,7 +37,7 @@ const RoutesPage = () => {
                 .then((res) => {
                     navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
-                    addDoc(collection(db, "users"), {
+                    addDoc(collection(db, "use"), {
                         email:email,
                         password:password
                       });
