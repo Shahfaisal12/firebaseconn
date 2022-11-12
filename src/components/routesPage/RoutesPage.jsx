@@ -26,19 +26,16 @@ const RoutesPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const updateEmail = (res) => {
+    const updateEmail = (ress) => {
         const auth = getAuth();
         sendPasswordResetEmail(auth, email)
             .then(() => {
-                // Password reset email sent!
-                // ..
-                console.log(res)
+                navigate("/login");
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-                // ..
+            .catch((err) => {
+                if (err.code === "auth/user-not-found") {
+                    toast.error("please check the email");
+                }
             });
     }
 
