@@ -26,7 +26,8 @@ const Form = ({ title, setEmail, setPassword, handleAction }) => {
             <h2 className="fw-bold mb-2 text-uppercase">{title} Form</h2>
             <p className="mb-5">Please enter your detail for signup</p>
             <TextField id="email" fullWidth label="Email" type="email" variant="outlined" onChange={(e) => setEmail(e.target.value)} />
-            <TextField id="password" className='mb-5' fullWidth label="Password" type='password' variant="outlined" onChange={(e) => setPassword(e.target.value)} />
+            <TextField id="password" fullWidth label="Password" type='password' variant="outlined" onChange={(e) => setPassword(e.target.value)} />
+              <p className="mb-5">Forget Password Click Here? <Link to="/forget" className="text-muted fw-bold">Forget</Link></p>
             <Button title={title} handleAction={handleAction} />
             <div>
               <p className="mb-0">Already an account? <Link to="/register" className="text-muted fw-bold">Register</Link></p>

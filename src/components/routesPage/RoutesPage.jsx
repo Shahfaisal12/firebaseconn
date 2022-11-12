@@ -10,19 +10,40 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import Dashboard from '../../pages/Dashboard'
 import { collection, addDoc } from "firebase/firestore";
+import ForgotPassword from '../elements/ForgotPassword'
 
 
 const RoutesPage = () => {
+
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const updateEmail = (res) => {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+                console.log(res)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+                // ..
+            });
+    }
+
     const navigate = useNavigate();
+
 
     useEffect(() => {
         let authToken = sessionStorage.getItem("auth");
@@ -38,7 +59,7 @@ const RoutesPage = () => {
                 .then((res) => {
                     navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
-                    addDoc(collection(db, "users"), {
+                    addDoc(collection(db, "users"), { /* , res.user.uid */
                         email: email,
                         password: password
                     });
@@ -78,6 +99,16 @@ const RoutesPage = () => {
             <Routes >
                 <Route index path='/' element={<Home />} />
                 <Route path='/dashboard' element={<Dashboard />} />
+                <Route
+                    path="/forget"
+                    element={
+                        <ForgotPassword
+                            setEmail={setEmail}
+                            setPassword={setPassword}
+                            updateEmail={() => updateEmail()}
+                            title="Forgot" />
+                    }
+                />
                 <Route
                     path="/login"
                     element={
