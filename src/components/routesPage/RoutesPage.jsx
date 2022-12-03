@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import Dashboard from '../../pages/Dashboard'
-import { collection, addDoc } from "firebase/firestore";
+import {setDoc, doc } from "firebase/firestore"; /* collection, addDoc, */
 import ForgotPassword from '../elements/ForgotPassword'
 
 
@@ -26,9 +26,9 @@ const RoutesPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const updateEmail = (ress) => {
+    const updateEmail = async () => {
         const auth = getAuth();
-        sendPasswordResetEmail(auth, email)
+        await sendPasswordResetEmail(auth, email)
             .then(() => {
                 navigate("/login");
             })
@@ -40,7 +40,6 @@ const RoutesPage = () => {
     }
 
     const navigate = useNavigate();
-
 
     useEffect(() => {
         let authToken = sessionStorage.getItem("auth");
@@ -56,10 +55,17 @@ const RoutesPage = () => {
                 .then((res) => {
                     navigate("/dashboard");
                     sessionStorage.setItem("auth", res._tokenResponse.refreshToken);
-                    addDoc(collection(db, "users"), { /* , res.user.uid */
+                    // addDoc(collection(db, "users"), { /* , res.user.uid */
+                    // uid: res.user.uid,
+                    //     email: email,
+                    //     password: password
+                    // });
+                    setDoc(doc(db, "users2", res.user.uid), { /* , res.user.uid */
+                        uid: res.user.uid,
                         email: email,
                         password: password
                     });
+                    console.log(res.user.uid)
                 })
                 .catch((e) => {
                     if (e.code === "auth/wrong-password") {
